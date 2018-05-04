@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第二节</title>
+    <style>
+        #box{
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: url("images/bg.jpg");
+        }
+        #adv{
+            display: none;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background-color: rgba(0,0,0,.5);
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="adv">
+            狐狸
+        </div>
+    </div>
+</body>
+<script>
+    var oBox = document.getElementById('box');
+    var oadv = document.getElementById('adv');
+    console.log(oBox)
+    oBox.onmouseenter = function(){
+        oadv.style.display = 'block';
+    }
+    oBox.onmouseleave =function () {
+        oadv.style.display='none';
+    }
+</script>
+</html>

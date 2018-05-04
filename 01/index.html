@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+<div id="div"></div>
+<div id="m" name="mgq">mgq</div>
+</body>
+<script>
+    document.getElementById('div').onclick = function (el) {
+        alert('d')
+    }
+    var omo = document.getElementById('div').onmouseover = function (el) {
+        alert('d')
+    }
+    console.log(0.1 + 0.2)
+    var m = document.getElementById('m');
+    console.log(m.hasAttribute('name'));
+    console.log(m.getAttribute('name'));
+</script>
+</html>
