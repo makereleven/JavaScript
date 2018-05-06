@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三节</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        #box {
+            position: relative;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        #box #header {
+            display: flex;
+            position: relative;
+            height: 50px;
+            background-color: #000;
+            align-items: center;
+            color: #fff;
+        }
+
+        #header span {
+            flex: 2 1 auto;
+            text-align: center;
+        }
+
+        #header #in {
+            visibility: hidden;
+            height: 20px;
+            flex: 2 1 auto;
+        }
+        #header #input{
+            height: 100%;
+            padding: 0;
+            border:0;
+            vertical-align: top;
+        }
+        #header #c-add {
+            background-color: brown;
+            color: #000;
+            cursor: pointer;
+        }
+        #header #add {
+            position: absolute;
+            right: 10%;
+            cursor: pointer;
+        }
+        #content{
+            display: none;
+            padding: 0;
+            border: 1px solid #000000;
+        }
+        #content li{
+            list-style: none;
+            height: 50px;
+            border-bottom: 1px solid #eee;
+            line-height: 50px;
+            text-indent: 10px;
+        }
+        #content li:hover{
+            color: crimson;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="header">
+        <span>最新动态</span>
+        <div id="in">
+            <input type="text" id="input">
+            <label for="input" id="c-add">添加</label>
+        </div>
+        <i id="add">+</i>
+    </div>
+    <ul id="content"></ul>
+</div>
+</body>
+<script>
+    var add = document.getElementById('add');
+    var oin = document.getElementById('in');
+    var cAdd = document.getElementById('c-add');
+    var input = document.getElementById('input');
+    var content = document.getElementById('content');
+    add.onclick = function () {
+        oin.style.visibility = 'visible';
+    }
+    cAdd.onclick = function () {
+        content.innerHTML =content.innerHTML +'<li>'+ input.value+ '</li>';
+        input.value = '';
+        content.style.display='block';
+        oin.style.visibility = 'hidden';
+    }
+</script>
+</html>
