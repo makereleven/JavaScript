@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第五节</title>
+    <style>
+        .wrapper {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            margin: 100px auto;
+        }
+
+        .loop, .once {
+            position: absolute;
+            top: -30px;
+            width: 100px;
+            height: 30px;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .loop {
+            left: 0;
+            background-color: #f00;
+        }
+
+        .once {
+            left: 100px;
+        }
+
+        .banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header, .footer {
+            position: absolute;
+            width: 100%;
+            height: 10%;
+            background-color: #eee;
+            text-align: center;
+        }
+
+        .header {
+            top: 0;
+        }
+
+        .l-arrow, .r-arrow {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            height: 40px;
+            margin: auto;
+            background-color: #eee;
+            line-height: 40px;
+        }
+
+        .l-arrow {
+            left: 0;
+        }
+
+        .r-arrow {
+            right: 0;
+        }
+
+        .footer {
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="loop">循环</div>
+    <div class="once">单次</div>
+    <div class="banner"><img src="images/banner1.jpg" alt="锤石"></div>
+    <div class="header">1/4</div>
+    <div class="l-arrow"><</div>
+    <div class="r-arrow">></div>
+    <div class="footer">第一张图片</div>
+</div>
+</body>
+<script>
+    var rArrow = document.getElementsByClassName('r-arrow')[0];
+    var lArrow = document.getElementsByClassName('l-arrow')[0];
+    var head = document.getElementsByClassName('header')[0];
+    var footer = document.getElementsByClassName('footer')[0]
+    var bannerImg = document.getElementsByClassName('banner')[0].getElementsByTagName('img')[0];
+    var oLoop = document.getElementsByTagName('div')[1];
+    var oOnce = document.getElementsByTagName('div')[2];
+    var i = 1;
+    var a = ["一", "二", "三", "四"];
+    var flag = false;
+    oLoop.onclick = function () {
+        oLoop.style.backgroundColor = '#f00';
+        oOnce.style.backgroundColor = '#000';
+        flag = true;
+    }
+    oOnce.onclick = function () {
+        oOnce.style.backgroundColor = '#f00';
+        oLoop.style.backgroundColor = '#000';
+        flag = false;
+    }
+    rArrow.onclick = function () {
+        i++;
+        if (flag) {
+            if (i > 4) {
+                i = 1;
+            }
+        } else {
+            if (i > 4) {
+                i = 4;
+                alert('已到末尾');
+            }
+        }
+        bannerImg.src = 'images/banner' + i + '.jpg';
+        head.innerText = i + '/4';
+        footer.innerText = '第' + a[i - 1] + '张图片';
+    }
+    lArrow.onclick = function () {
+        i--;
+        if (flag) {
+            if (i < 1) {
+                i = 4;
+            }
+        }else {
+            if (i < 1) {
+                i = 1;
+                alert('已到开头');
+            }
+        }
+        bannerImg.src = 'images/banner' + i + '.jpg';
+        head.innerText = i + '/4';
+        footer.innerText = '第' + a[i - 1] + '张图片';
+    }
+
+</script>
+</html>
