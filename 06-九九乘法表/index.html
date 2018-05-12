@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第五节</title>
+    <style>
+        .wrapper {
+            position: relative;
+            width: 1010px;
+            height: 400px;
+            margin: 100px auto;
+        }
+        li{
+            padding:0;
+            list-style: none;
+        }
+        li{
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            margin: 5px;
+            border: 1px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <ul class="wrapper">
+    </ul>
+</body>
+<script>
+    var oul = document.getElementsByClassName('wrapper')[0];
+    for (var k = 1;k<10;k++){
+        var i = k;
+        for (var j = 1;j<=k;j++){
+            oul.innerHTML+=`<li>${j}*${i}=${k*(i--)}</li>`;
+        }
+        oul.innerHTML+="<br>";
+    }
+    for (var k = 1;k<10;k++){
+        for (var j = 1;j<=10-k;j++){
+            oul.innerHTML+=`<li>${k}*${j}=${k*j}</li>`;
+        }
+        oul.innerHTML+="<br>";
+    }
+    for (var i = 9;i>0;i--){
+        for (var j = 1;j<=i;j++){
+            oul.innerHTML+=`<li>${i}*${j}=${i*j}</li>`;
+        }
+        oul.innerHTML+="<br>";
+    }
+    for (var k = 9;k>0;k--){
+        for (var j = k,i=0;j<=9;j++){
+            oul.innerHTML+=`<li>${j}*${k}=${k*j}</li>`;
+        }
+        oul.innerHTML+="<br>";
+    }
+
+</script>
+</html>
