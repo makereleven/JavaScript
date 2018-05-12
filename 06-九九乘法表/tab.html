@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .wrapper {
+            position: relative;
+            width: 1010px;
+            margin:0;
+        }
+        li{
+            list-style: none;
+            width: 100px;
+            height: 50px;
+            padding:0;
+            border: 1px solid #000000;
+        }
+        .title ~ li{
+            display: none;
+        }
+        .title ~ li:hover{
+            background-color: blueviolet;
+        }
+        .title{
+            background-color: #eeeeee;
+        }
+        .n{
+            display: none;
+        }
+        .title ~ .active{
+            display: block;
+        }
+    </style>
+</head>
+<ul class="wrapper">
+    <li class="title">同事</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+<ul class="wrapper">
+    <li class="title">好友</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+<ul class="wrapper">
+    <li class="title">vip</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+<body>
+
+</body>
+<script>
+    var aul =document.getElementsByClassName('wrapper');
+    var atitle = document.getElementsByClassName('title');
+    var allLi = document.querySelectorAll('.title ~ li');
+    for (let i = 0;i<atitle.length;i++){
+        atitle[i].onclick = function () {
+            var ali= document.getElementsByClassName('wrapper')[i].getElementsByTagName('li');
+            for (var k = 0;k<allLi.length;k++){
+                allLi[k].className='n';
+            }
+            for (var j=1; j<ali.length;j++) {
+                console.log(ali[0]);
+                ali[j].className='active';
+                console.log(ali[j].className);
+            }
+        }
+    }
+</script>
+
+</html>
