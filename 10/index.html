@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .wrapper {
+            position: relative;
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        li {
+            position: relative;
+            list-style: none;
+            height: 50px;
+            padding: 15px;
+            box-sizing:border-box;
+        }
+        div{
+            display: inline-block;
+            width: 50%;
+            height: 20px;
+            margin: auto;
+             vertical-align: top;
+        }
+        img{
+            display: none;
+        }
+        input{
+            width: 100%;
+            vertical-align: top;
+        }
+        button{
+            position: absolute;
+            right: 20px;
+            width:50px;
+            height: 20px;
+            vertical-align: top;
+        }
+        .odd {
+            background-color: rgb(87,210,247);
+        }
+
+        .even {
+            background-color: rgb(114,109,209);
+        }
+        .none{
+            display: none;
+        }
+        .choose{
+            display: block;
+        }
+        .active{
+            background-color: #ff0;
+        }
+    </style>
+</head>
+<ul class="wrapper">
+    <li>
+        <div>doAnything</div>
+        <button>修改</button>
+    </li>
+    <li>
+        <div>doAnything</div>
+        <button>修改</button>
+    </li>
+    <li>
+        <div>doAnything</div>
+        <button>修改</button>
+    </li>
+    <li>
+        <div>doAnything</div>
+        <button>修改</button>
+    </li>
+</ul>
+<body>
+
+</body>
+<script>
+    var aLi = document.getElementsByTagName('li');
+    var aDiv = document.getElementsByTagName('div');
+    var aButton = document.getElementsByTagName('button');
+    var aInput = document.getElementsByTagName('input');
+    /* 样式 */
+    for (let i = 0; i < aLi.length; i++) {
+        if (i % 2 == 0) {
+                aLi[i].className = 'even';
+            } else {
+                aLi[i].className = 'odd';
+            }
+        aLi[i].onmouseenter=function(){
+            aLi[i].style.backgroundColor='rgb(217,179,230)';
+        };
+        aLi[i].onmouseleave=function(){
+            aLi[i].style.backgroundColor='';
+        };
+    }
+    /* 样式 */
+
+    // for (var i = 0; i < aButton.length; i++) {
+    //     aButton[i].index = i;
+    //     aButton[i].flag = true;
+    //     aButton[i].onclick=function () {
+    //         if (this.flag) {
+    //             aLi[this.index].innerHTML= "<input type='text' name='list'>"+"<button>确认</button>";
+    //             this.flag = !this.flag;
+    //             console.log(this.flag);
+    //         }else{
+    //             aLi[this.index].innerHTML= aInput[this.index].value+"<button>修改</button>";
+    //             this.flag = !this.flag;
+    //             console.log(this.flag);
+    //         }   
+    //     }     
+    // }
+    
+
+    var aLi = document.getElementsByTagName('li');
+    var aDiv = document.getElementsByTagName('div');
+    var aButton = document.getElementsByTagName('button');
+    var aInput = document.getElementsByTagName('input');
+    for (var i = 0; i < aButton.length; i++) {
+        aButton[i].index = i;
+        aButton[i].flag = true;
+        aButton[i].onclick=function () {
+            if (this.flag) {
+                aDiv[this.index].innerHTML= "<input type='text'>";
+                this.innerText = "确认";
+                this.flag = !this.flag;
+            }else{
+                aDiv[this.index].innerHTML= aDiv[this.index].getElementsByTagName('input')[0].value;
+                 this.innerText = "修改";
+                this.flag = !this.flag;
+            }
+        }
+    }
+
+
+    // var aLi = document.getElementsByTagName('li');
+    // var aDiv = document.getElementsByTagName('div');
+    // var aButton = document.getElementsByTagName('button');
+    // var aInput = document.getElementsByTagName('input');
+    // for (var i = 0; i < aButton.length; i++) {
+    //     aButton[i].index = i;
+    //     aButton[i].flag = true;
+    //     aButton[i].onclick=function () {
+    //         if (this.flag) {
+    //             aDiv[this.index].contentEditable= "true";
+    //             aDiv[this.index].style.backgroundColor = '#fff';
+    //             this.innerText = "确认";
+    //             this.flag = !this.flag;
+    //             console.log(this.flag);
+    //         }else{
+    //             aDiv[this.index].contentEditable= "false";
+    //             aDiv[this.index].style.backgroundColor = '';
+    //              this.innerText = "修改";
+    //             this.flag = !this.flag;
+    //             console.log(this.flag);
+    //         }
+    //     }
+    // }
+</script>
+
+</html>

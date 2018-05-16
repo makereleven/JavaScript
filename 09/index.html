@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .wrapper {
+            position: relative;
+            width: 1010px;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+            width: 100px;
+            height: 50px;
+            padding: 0;
+            border: 1px solid #000000;
+        }
+
+        .odd {
+            background-color: red;
+        }
+
+        .even {
+            background-color: blue;
+        }
+    </style>
+</head>
+<ul class="wrapper">
+    <li><input type="checkbox">2</li>
+    <li><input type="checkbox">2</li>
+    <li><input type="checkbox">2</li>
+    <li><input type="checkbox">2</li>
+    <li><input type="checkbox" id="all">全选</li>
+</ul>
+<body>
+
+</body>
+<script>
+    var aTitle = document.getElementsByClassName('title');
+    var aLi = document.getElementsByTagName('li');
+    var oAll = document.getElementById('all');
+    var ainput = document.getElementsByTagName('input');
+    for (var i = 0; i < aLi.length; i++) {
+        if (i % 2 == 0) {
+            aLi[i].className = 'even';
+        } else {
+            aLi[i].className = 'odd';
+        }
+
+    }
+    oAll.onclick = function () {
+        console.log(oAll);
+        for (var i = 0; i < ainput.length; i++) {
+            ainput[i].checked = 'checked';
+        }
+    }
+
+</script>
+
+</html>
