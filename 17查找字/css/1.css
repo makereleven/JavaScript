@@ -1,0 +1,75 @@
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,input,select,textarea,div,table,td,th,tr,dt,dd,dl{
+	margin:0;padding:0;
+}
+ul,ol{
+	list-style:none;
+}
+.clearfix:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.box{
+	width:1000px;
+	margin:50px auto;
+}
+.box .title{
+	border:1px solid #f0f0f0;
+}
+.box .title>li{
+	position: relative;
+	float:left;
+	padding:10px 35px;
+	cursor: pointer;
+}
+.box .title>li .nav-drop{
+	display: none;
+	position:absolute;
+	top:100%;
+	left: 0;
+	width:100%;
+	height: 100px;
+	border: 1px solid #000;
+	background-color: #fff;
+	z-index: 10;
+}
+.box .title li:hover{
+	background-color: red;
+}
+.box .title>li:hover .nav-drop{
+	display: block;
+}
+.box .title>li .nav-drop>li{
+	padding:10px;
+}
+.box .content{
+	margin:10px auto;
+}
+.box .content li{
+	position: relative;
+	float:left;
+	width:230px;
+	height:255px;
+	margin:9px;
+	border:1px solid #f0f0f0;
+}
+.box .content li:hover{
+	box-shadow:5px 5px 10px #eee;
+}
+.box .content img{
+	display:block;
+	width:200px;
+	height:186.5px;
+	margin:15px auto;
+}
+.box .content p{
+	margin-left:15px;
+	font-size:14px;
+}
+.box .content .price{
+	position: absolute;
+	bottom: 10px;
+	right:10px;
+	width: 50px;
+	background-color: red;
+}

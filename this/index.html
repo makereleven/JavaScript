@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+    <style>
+        #nav {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="nav"></div>
+<script>
+    function f() {
+        return this.a;
+    }
+
+    var g = f.bind({a: "花花"});
+    console.log(g()); // 花花
+    var h = g.bind({a: 'yoo'}); // bind只生效一次！
+    console.log(h()); // 花花
+    Person.call(this,name,age);
+</script>
+</body>
+</html>

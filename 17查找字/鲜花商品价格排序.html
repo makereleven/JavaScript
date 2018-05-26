@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>
+	</title>
+	<link rel="stylesheet" type="text/css" href="css/1.css">
+</head>
+<body>
+	<div class="box">
+		<ul class="title clearfix">
+			<li class="title-item">流行</li>
+			<li class="title-item">热销</li>
+			<li class="title-item">上新</li>
+			<li class="title-item">
+				价格
+				<ul class="nav-drop">
+					<li class="desc">从高到低</li>
+					<li class="asc">从低到高</li>
+				</ul>
+			</li>
+		</ul>
+		<ul class="content clearfix">
+			<li>
+				<img src="images/xh_img1.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<i>￥</i><p class="price">100</p>
+			</li>
+			<li>
+				<img src="images/xh_img2.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">200</p>
+			</li>
+			<li>
+				<img src="images/xh_img3.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">500</p>
+			</li>
+			<li>
+				<img src="images/xh_img4.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">150</p>
+			</li>
+			<li>
+				<img src="images/xh_img5.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">600</p>
+			</li>
+			<li>
+				<img src="images/xh_img6.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">400</p>
+			</li>
+			<li>
+				<img src="images/xh_img7.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">300</p>
+			</li>
+			<li>
+				<img src="images/xh_img8.jpg">
+				<p>玫瑰玫瑰玫瑰</p>
+				<p class="price">80</p>
+			</li>
+		</ul>
+	</div>
+	<script>
+		var oContent = document.getElementsByClassName('content')[0];
+		var aGoods = document.getElementsByClassName('content')[0].getElementsByTagName('li');
+		var aTitleLi= document.getElementsByClassName('title-item');
+        var oNavDrop = document.getElementsByClassName('nav-drop')[0];
+        var aDesc = document.getElementsByClassName('desc');
+        var aAsc = document.getElementsByClassName('asc');
+        var aPrice = document.getElementsByClassName('price');
+		var arr = [];
+		for(var i = 0;i<aGoods.length;i++){
+            arr.push(aGoods[i]);
+			arr[i].price=aPrice[i].innerText;
+        }
+		aDesc[0].onclick = function () {
+			arr=quickSort(arr);
+			console.log(arr);
+            oContent.innerHTML="";
+			for(var i=0;i<arr.length;i++){
+			    oContent.innerHTML+="<li>"+arr[i].innerHTML+"</li>";
+			}
+        }
+		function quickSort(arr) {
+		    console.log(arr);
+			if(arr.length<=1){return arr;}
+            var pivotIndex=Math.floor(arr.length/2);
+            //找基准，并把基准从原数组删除
+            var pivot=arr.splice(pivotIndex,1)[0];
+			var left =[];
+			var right=[];
+			for (var i = 0; i < arr.length; i++) {
+			    if(arr[i].price<=pivot.price){
+			        left.push(arr[i]);
+				}else{
+			        right.push(arr[i]);
+				}
+			}
+            console.log(left);
+            console.log(right);
+			return quickSort(left).concat([pivot],quickSort(right));
+        }
+	</script>
+</body>
+</html>
