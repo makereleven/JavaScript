@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画</title>
+    <style>
+        ul,li{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .content{
+            height: 1800px;
+        }
+        ul{
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 50px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        li{
+            height: 30px;
+            background-color: #eee;
+            cursor: pointer;
+        }
+        .active{
+            background-color: blue;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+<div class="content"></div>
+<ul class="wrapper">
+    <li class="active">直播</li>
+    <li>动画</li>
+    <li>番剧</li>
+    <li>国创</li>
+    <li>音乐</li>
+    <li>舞蹈</li>
+    <li>游戏</li>
+    <li>科技</li>
+    <li>生活</li>
+    <li>鬼畜</li>
+    <li>置顶</li>
+</ul>
+<script>
+    var goTop = document.querySelector('li:last-child');
+    var aLi = document.getElementsByTagName('li');
+    var per = 0;
+    goTop.onclick=function() {
+        console.log("d")
+        var interval = setInterval(function () {
+            document.documentElement.scrollTop-=10;
+            if(document.documentElement.scrollTop==0){
+                clearInterval(interval);
+            }
+        },1000/60)
+    }
+
+    window.onscroll=function () {
+        console.log(document.documentElement.scrollTop)
+        console.log(document.documentElement.clientHeight)
+        var i = Math.floor(document.documentElement.scrollTop/70);
+        if(i>aLi.length-1){
+            i=0;
+        }
+        console.log(i);
+        aLi[per].className="";
+        aLi[i].className="active";
+        per = i;
+    }
+    // for (var i = 0; i < aLi.length; i++) {
+    //     aLi[i].index=i;
+    //     aLi[i].onclick=function () {
+    //         document.documentElement.scrollTop=this.index*document.documentElement.clientHeight/7;
+    //     }
+    // }
+</script>
+</body>
+</html>

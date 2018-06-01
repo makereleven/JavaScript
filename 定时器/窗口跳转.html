@@ -7,8 +7,8 @@
         .time{
             width: 500px;
             height:200px;
-            background-color: #bbbbbb;
             margin: 0 auto;
+            border:1px dotted;
             line-height: 200px;
             text-align: center;
             font-size: 20px;
@@ -27,6 +27,7 @@
             otime.innerHTML="还剩<span>"+i+"</span>s";
             if (i == 0) {
                 clearInterval(time);
+                window.location.href='http://www.baidu.com';
             }
 
             i--;
