@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            background: #ffd740;
+        }
+
+        i {
+            display: inline-block;
+        }
+
+        .icon-clock {
+            overflow: hidden;
+            width: 220px;
+            height: 220px;
+            background: #000;
+            border-radius: 38px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        #clock {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: 0 auto;
+            width: 192px;
+            height: 192px;
+            background: #fff;
+            border: 1px solid;
+            border-radius: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .num{
+            position: relative;
+            width: 190px;
+            height: 190px;
+            padding: 1px;
+        }
+        .num>li{
+            position:absolute;
+            font-weight: 600;
+            list-style-type: none;
+            text-align: center;
+            vertical-align: top;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        #hour, #minute, #second {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 10px;
+        }
+
+        #hour {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #303030;
+            margin-top: -7px;
+            margin-left: -7px;
+        }
+
+        #minute {
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: #303030;
+
+        }
+
+        #second {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #dd3e1c;
+            border: 2px solid #e13e1b;
+            margin-top: -4px;
+            margin-left: -4px;
+
+        }
+
+        #hour:before, #minute:before, #second:before {
+            display: block;
+            position: absolute;
+            left: 50%;
+            border-radius: 4px;
+            content: "";
+
+        }
+
+        #hour:before {
+            width: 8px;
+            height: 65px;
+            bottom: 2px;
+            background: #303030;
+            -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #minute:before {
+            width: 6px;
+            height: 90px;
+            background: #303030;
+            bottom: 2px;
+            -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #second:before {
+            width: 2px;
+            height: 105px;
+            background: #e13e1b;
+            bottom: -12px;
+            -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+    </style>
+</head>
+<body>
+<div class="icon-clock">
+    <div id="clock">
+        <ol class="num">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+        <i id="hour"></i>
+        <i id="minute"></i>
+        <i id="second"></i>
+    </div>
+</div>
+<script type="text/javascript">
+    var clock = document.getElementById('clock'),
+        hour = document.getElementById('hour'),
+        minute = document.getElementById('minute'),
+        second = document.getElementById('second');
+    var aLi =document.getElementsByTagName('li');
+    //旋转动画
+    function circle() {
+        //获取当前时间
+        var myDate = new Date();
+        var hourDeg = (((myDate.getHours() % 12) + myDate.getMinutes()/60) / 12) * 360,       //获取当前小时数(0-23)
+            minuteDeg = (myDate.getMinutes() + myDate.getSeconds() / 60) / 60 * 360,     //获取当前分钟数(0-59)
+            secondDeg = myDate.getSeconds() / 60 * 360;    //获取当前秒数(0-59)
+        hour.style.transform = `rotate(${hourDeg + minuteDeg / 60}deg)`;
+        minute.style.transform = `rotate(${minuteDeg}deg) `;
+        second.style.transform = `rotate(${secondDeg}deg)`;
+    }
+
+    circle();
+    //开启一个循环动画
+    setInterval("circle()", 1000);
+
+    var r = 80,
+        deg = 0;
+
+    function num() {
+        for (var i = 0; i < 12; i++) {
+            var _left = 95 + Math.cos(Math.PI / 180 * deg) * r,
+                _top = 95 - Math.sin(Math.PI / 180 * deg) * r;
+            deg-=30;
+            if(i+3>12){
+                aLi[i].innerText=i-9;
+            }else {
+                aLi[i].innerText=i+3;
+
+            }
+
+            aLi[i].style.left = _left+'px';
+            aLi[i].style.top = _top+'px';
+
+        }
+    }
+    num();
+</script>
+</body>
+</html>

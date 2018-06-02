@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时间</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .times {
+            width: 500px;
+            margin: auto;
+        }
+
+        .times li {
+            list-style-type: none;
+            padding: 8px;
+        }
+
+        .times li h1 {
+
+        }
+
+        .times li + li {
+            border-top: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<ul class="times">
+    <li>
+        <h1>北京</h1>
+        <p></p>
+    </li>
+</ul>
+<script type="text/javascript">
+    var data = [
+        {
+            title: "北京",
+            offset: 8
+        },
+        {
+            title: "新西兰",
+            offset: 12
+        },
+        {
+            title: "夏威夷",
+            offset: -10
+        },
+        {
+            title: "阿拉斯加",
+            offset: -11
+        }
+    ];
+    var oTimes = document.querySelector('.times'),
+        oLi = oTimes.getElementsByTagName('li');
+    var str = "";
+    for (var i = 0; i < data.length; i++) {
+        var thisData = data[i];
+        str += `<li><h1>${thisData.title}</h1><p></p></li>`;
+    }
+    oTimes.innerHTML = str;
+    //设置时间
+    function setDate() {
+        for (var i = 0; i < data.length; i++) {
+            var data = new Date(Date.UTC(new Date().toLocaleDateString()));
+            oLi[i].getElementsByTagName('p')[0].innerHTML=date.getFullYear()+"年"+date.getMonth()+1+"月"+date.getData()+"日"+date.getHours()+"时"+date.getMinutes()+"分"+date.getSeconds()+"秒";
+        }
+    }
+</script>
+</body>
+</html>
