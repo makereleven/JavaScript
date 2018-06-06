@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/1.css">
+</head>
+<body>
+<div class="wrap">
+    <ul class="wrap-main">
+        <ul class="wrap-img clearfix">
+            <li class="Carousel-1"></li>
+            <li class="Carousel-2"></li>
+            <li class="Carousel-3"></li>
+            <li class="Carousel-4"></li>
+            <li class="Carousel-5"></li>
+            <li class="Carousel-6"></li>
+        </ul>
+        <li class="left-borrow"><a href="#"><img src="images/left.png"></a></li>
+        <li class="right-borrow"><a href="#"><img src="images/right.png"></a></li>
+        <li class="bottom-option">
+            <ul class="clearfix">
+                <li class="option"><a href="#">1</a></li>
+                <li class="option"><a href="#">2</a></li>
+                <li class="option"><a href="#">3</a></li>
+                <li class="option"><a href="#">4</a></li>
+                <li class="option"><a href="#">5</a></li>
+                <li class="option"><a href="#">6</a></li>
+            </ul>
+        </li>
+    </ul>
+    <script type="text/javascript">
+        var banner = document.querySelector('.wrap-img'),
+            rightBorrow = document.querySelector('.right-borrow'),
+            leftBorrow = document.querySelector('.left-borrow'),
+            aOption = document.querySelectorAll('.option'),
+            cur = 0;
+
+        //左右按钮跳转轮播
+        rightBorrow.onclick = function () {
+            cur++;
+            animation(true, banner, 'left', cur * (-1120), 10);
+        }
+        leftBorrow.onclick = function () {
+            cur--;
+            animation(true, banner, 'left', cur * (-1120), 10);
+        }
+
+        //底部按钮跳转轮播
+        for (var i = 0; i < aOption.length; i++) {
+            aOption[i].index = i;
+            aOption[i].onclick = function () {
+                cur = this.index;
+                animation(false, banner, 'left', this.index * (-1120), 20);
+            }
+        }
+
+        //定时轮播
+        setTimeout(1000)
+
+        /*速度版运动框架
+        * ele 元素节点
+        * attr 属性值
+        * value 具体数值
+        * step 步长
+        * callback 回调函数
+        * */
+        function animation(bl, ele, attr, value, step, callback) {
+            var start = parseFloat(getStyle(ele)[attr]);
+            direction = start > value;
+            direction && (step /= -1);
+            (function fn() {
+                if (direction ? start <= value : start >= value) {
+                    start = value;
+                    ele.style[attr] = start + 'px';
+                    callback && callback.call(ele);
+                } else {
+                    start += step;
+                    ele.style[attr] = start + 'px';
+                    requestAnimationFrame(fn);
+                }
+            })();
+        }
+
+        //获取style
+        function getStyle(ele) {
+            //ele.currentStyle ie兼容
+            return getComputedStyle(ele) || ele.currentStyle;
+        }
+    </script>
+</div>
+</body>
+</html>

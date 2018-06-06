@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>运动框架</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script type="text/javascript">
+    var box = document.querySelector('.box');
+    animation(box, 'width', 500, 10,function () {
+        animation(box,'height',500,10,function () {
+            animation(this,'marginLeft',200,5)
+        })
+    });
+
+    /*速度版运动框架
+    * ele 元素节点
+    * attr 属性值
+    * value 具体数值
+    * step 步长
+    * callback 回调函数
+    * */
+
+    function animation(ele, attr, value, step, callback) {
+        var start = parseFloat(getStyle(ele)[attr]),
+            direction = start > value;
+        direction && (step /= -1);
+        (function fn() {
+            if (direction ? start <= value : start >= value) {
+                start = value;
+                ele.style[attr]=start+'px';
+                callback&&callback.call(ele);
+            } else {
+                start += step;
+                ele.style[attr] = start + 'px';
+                requestAnimationFrame(fn);
+            }
+        })();
+    }
+
+    //获取style
+    function getStyle(ele) {
+        //ele.currentStyle ie兼容
+        ele=document.getElementsByClassName('box')[0];
+        return getComputedStyle(ele) || ele.currentStyle;
+    }
+</script>
+</body>
+</html>

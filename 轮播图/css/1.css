@@ -1,0 +1,98 @@
+/*默认样式*/
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,input,select,textarea,div,table,td,th,tr,dt,dd,dl{
+	margin:0;padding:0;
+}
+ul,ol{
+	list-style:none;
+}
+a{
+	display:block;
+	text-decoration: none;
+}
+/*默认样式*/
+.clearfix:after{
+	display:block;
+	clear:both;
+	content:'';
+}
+.wrap-main{
+	position:relative;
+	overflow:hidden;
+	width:1120px;
+	height:500px;
+	margin:50px auto;
+}
+/* =====图片===== */
+.wrap-img{
+	position:absolute;
+	left:0;
+	width:6720px;
+}
+.wrap-img .Carousel-1,.wrap-img .Carousel-2,.wrap-img .Carousel-3,.wrap-img .Carousel-4,.wrap-img .Carousel-5,.wrap-img .Carousel-6{
+	float:left;
+	width:1120px;
+	height:500px;
+}
+.wrap-img .Carousel-1{
+	background:url(../images/1.jpg) no-repeat;
+}
+.wrap-img .Carousel-2{
+	background:url(../images/2.jpg) no-repeat;
+}
+.wrap-img .Carousel-3{
+	background:url(../images/3.jpg) no-repeat;
+}
+.wrap-img .Carousel-4{
+	background:url(../images/4.jpg) no-repeat;
+}
+.wrap-img .Carousel-5{
+	background:url(../images/5.jpg) no-repeat;
+}
+.wrap-img .Carousel-6{
+	background:url(../images/6.jpg) no-repeat;
+}
+/* =====图片===== */
+.wrap-main .left-borrow,.wrap-main .right-borrow{
+	position:absolute;
+    width: 30px;
+    height: 60px;
+	background-color:rgba(7,17,27,.4);
+	line-height:60px;
+}
+.wrap-main .left-borrow{
+	top:220px;
+	left:0;
+}
+.wrap-main .right-borrow{
+	top:220px;
+	right:0;
+}
+.wrap-main .left-borrow:hover,.wrap-main .right-borrow:hover{
+	background-color:rgb(255,140,0);
+}
+.wrap-main .left-borrow img,.wrap-main .right-borrow img{
+	width:30px;
+	height:20px;
+}
+.wrap-main .bottom-option{
+	position:absolute;
+	left:470px;
+	bottom:30px;
+}
+.wrap-main .bottom-option li{
+	float:left;
+	width:25px;
+	height:25px;
+	margin-left:5px;
+	background-color:rgba(7,17,27,.4);
+	text-align:center;
+	line-height:25px;
+	border-radius:50%;
+}
+.wrap-main .bottom-option li:hover{
+	background-color:rgb(255,165,0);
+}
+.wrap-main .bottom-option li a{
+	font-size:16px;
+	color:#fff;
+}
