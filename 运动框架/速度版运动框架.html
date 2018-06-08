@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>时间版运动框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
+<div class="box"></div>
+<script type="text/javascript">
+    var oBox = document.querySelector('.box');
+    animation(oBox, "width", 500, 10000);
 
+    function animation(ele, attr, value, time, callback) {
+
+        //获取时间开始值
+        var goTime = new Date().getTime(), //当前时间的毫秒数
+            startValue = parseFloat(getStyle(ele)[attr]),
+            change = value - startValue; //开始到结束的差值
+
+        function fn() {
+            //（当前时间 -开始时间）/结束时间
+            var now = (new Date().getTime() - goTime) / time;
+            if (now >= 1) {
+                now = 1;
+                ele.style[attr] = startValue + change * now + 'px';
+                callback && callback.call(ele);
+            } else {
+                // 开始位置+总路程*当前时间比例
+                ele.style[attr] = startValue + change * now + 'px';
+                requestAnimationFrame(fn);
+            }
+        }
+
+        fn();
+    }
+
+    //获取最终样式
+    function getStyle(ele) {
+        //ele.currentStyle ie兼容
+        return getComputedStyle(ele) || ele.currentStyle;
+    }
+</script>
 </body>
 </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多值版运动框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script type="text/javascript">
+    var oBox = document.querySelector('.box');
+    /*
+    * ele 元素
+    * attr json数据
+    * time 时间
+    * callback 回调
+    */
+    console.log(oBox)
+    animation(oBox, {
+        width: 500,
+        height: 500,
+        opacity:0.5
+    }, 500);
+
+    function animation(ele, attr, time, callback) {
+        var goTime = new Date().getTime(),
+            startAttr = {};
+        //设置开始和结束时间
+        for (var key in attr) {
+            var start = parseFloat(getStyle(ele)[key]),
+                change = parseFloat(attr[key] - start);//传入值有单位转换类型
+            startAttr[key] = {
+                start: start,
+                change: change
+            };
+        }
+
+        function fn() {
+            var now = (new Date().getTime() - goTime) / time;
+            if (now >= 1) {
+                now = 1;
+                setStyle(ele,startAttr,now);
+            } else {
+                setStyle(ele,startAttr,now);
+                requestAnimationFrame(fn);
+            }
+        }
+
+        fn();
+    }
+    function setStyle(ele,startAttr,now) {
+        for (var key in startAttr) {
+            if(key==='opacity'){
+                ele.style[key] = startAttr[key].start + startAttr[key].change * now ;
+            }else{
+                ele.style[key] = startAttr[key].start + startAttr[key].change * now + 'px';
+
+            }
+        }
+    }
+    //获取最终样式
+    function getStyle(ele) {
+        //ele.currentStyle ie兼容
+        return getComputedStyle(ele) || ele.currentStyle;
+    }
+</script>
+</body>
+</html>
