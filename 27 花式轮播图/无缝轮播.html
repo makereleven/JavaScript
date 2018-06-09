@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>无缝轮播</title>
+	<style type="text/css">
+		
+		*{
+			margin: 0;
+			padding: 0
+		}
+		ul li{
+			list-style-type: none;
+		}
+		.banner{
+			position: relative;
+			margin: auto;
+			width: 1000px;
+			overflow: hidden;
+		}
+		.pic{
+			position: relative;
+			width: 1000%;
+			overflow: hidden;
+		}
+		.pic li{
+			float: left;
+			width: 10%;
+		}
+		.pic li a,
+		.pic li img{
+			display: block;
+			width: 100%;
+		}
+		.btns{
+			position: absolute;
+			bottom: 50%;
+			width: 100%;
+			height: 0;
+
+		}
+		.btns span{
+			float: left;
+			width: 50px;
+			line-height: 50px;
+			text-align: center;
+			font-family: "宋体";
+			font-size: 30px;
+			color: #121212;
+			background: rgba(255,255,255,.5);
+		}
+		.btns span + span{
+			float: right
+		}
+		.pic-num{
+			position: absolute;
+			width: 100%;
+			bottom: 20px;
+			font-size: 0;
+			text-align: center;
+		}
+		.pic-num li{
+			display: inline-block;
+			margin: 0 8px;
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			background: red;
+		}
+		.pic-num li.on,
+		.pic-num li:hover{
+			background: pink;
+		}
+	</style>
+</head>
+<body>
+	<div class="banner">
+		
+		<ul class="pic">
+			<li><a href=""><img src="images/1.jpg" alt=""></a></li>
+			<li><a href=""><img src="images/2.jpg" alt=""></a></li>
+			<li><a href=""><img src="images/3.jpg" alt=""></a></li>
+			<li><a href=""><img src="images/4.jpg" alt=""></a></li>
+		</ul>
+		
+		<div class="btns">
+			<span>&lt;</span>
+			<span>&gt;</span>
+		</div>
+		<ul class="pic-num"></ul>
+	</div>
+	<script type="text/javascript" src="animation.js"></script>
+	<script type="text/javascript">
+		
+		//先获取节点
+		var oBanner = document.querySelector('.banner'),
+			oPic = oBanner.querySelector('.pic'),
+			oPicLi = oPic.querySelectorAll('li'),
+			oBtns = oBanner.querySelectorAll('.btns span'),
+			oPicNum = oBanner.querySelector('.pic-num');
+
+		//定义运动的变量
+		var _length = oPicLi.length,
+			_width = oBanner.offsetWidth,
+			index = 0,
+			_status = true;
+
+		//赋值一份
+		oPic.innerHTML += oPic.innerHTML;
+
+		//创建li节点
+		// var oPicNumLi = new Array(_length + 1);
+		// oPicNum.innerHTML = oPicNumLi.join('<li></li>');
+		// oPicNumLi = oPicNum.querySelectorAll('li');
+
+		//因为要添加事件
+		for(var i = 0;i < _length;i++){
+
+			//创建节点
+			var thatLi = document.createElement('li');//可以添加事件 添加
+	
+			thatLi.index = i;
+			thatLi.onclick = function(){
+
+				oPicNumLi[index].className = '';
+				index = this.index;
+				oPicNumLi[index%_length].className = 'on';
+				
+				move();
+			}
+			
+			//添加到ul节点中
+			oPicNum.appendChild(thatLi);
+		}
+		var oPicNumLi = oPicNum.querySelectorAll('li');
+
+		//添加默认状态
+		oPicNumLi[index].className = 'on';
+
+		//上一张
+		oBtns[0].onclick = function(){
+
+			if(_status){
+				oPicNumLi[index].className = '';
+				_status && index--;
+				//当他小于0就等于长度-1
+				if(index < 0){
+
+					oPic.style.left = _length * -_width+'px';
+					index = _length - 1;
+				}
+
+				oPicNumLi[index].className = 'on';
+				move();
+			}
+		}
+
+		//下一张
+		oBtns[1].onclick = function(){
+
+			if(_status){
+
+				oPicNumLi[index].className = '';
+
+				index++;
+
+				oPicNumLi[index%_length].className = 'on';
+
+				move();
+			}
+		}
+
+		//运动函数
+		function move() {
+
+			_status = false;
+			
+			animation(oPic,{
+				left : index * -_width
+			},{
+				duration : 600
+			},function(){
+
+				_status = true;
+
+				if(index >= _length){
+
+					index = 0;
+					this.style.left = 0;//直接设置css，速度是非常快的肉眼看不出来，所以就没有过渡效果
+				}
+
+			});
+			
+		}
+
+	</script>
+</body>
+</html>

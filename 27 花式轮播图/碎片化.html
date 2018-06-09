@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>碎片化</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.banner{
+			position: relative;
+			margin: auto;
+			border: 1px solid;
+		}
+		.fragment{
+			overflow: hidden;
+		}
+		.fragment i{
+			position: relative;
+			float: left;
+			background: url(images/2.jpg);
+			background-repeat: no-repeat;
+		}
+		.btns{
+			position: absolute;
+			bottom: 50%;
+			width: 100%;
+			height: 0;
+		}
+		.btns span{
+			float: left;
+			width: 50px;
+			line-height: 50px;
+			text-align: center;
+			font-family: "宋体";
+			font-size: 30px;
+			color: #121212;
+			background: rgba(255,255,255,.5);
+			cursor: pointer;
+		}
+		.btns span + span{
+			float: right;
+		}
+	</style>
+</head>
+<body>
+	<div class="banner">
+
+		<!-- 碎片化的容器 -->
+		<div class="fragment">
+		</div>
+
+		<div class="btns">
+			<span>&lt;</span>
+			<span>&gt;</span>
+		</div>
+	</div>
+	<script type="text/javascript" src="animation.js"></script>
+	<script type="text/javascript">
+		
+		fragmentBanner();
+		function fragmentBanner() {
+			
+			//获取元素节点
+			var oBanner = document.querySelector('.banner'),
+				oFragment = oBanner.querySelector('.fragment'),
+				oFragmentI = oFragment.getElementsByTagName('i'),
+				oBtns = oBanner.querySelectorAll('.btns span');
+
+			//定义属性值
+			var bannerAttr = {
+					width : 1000,
+					height : 560,
+				},
+				grid = {
+					list : 10,//行
+					column : 10//列
+				},
+				oIAttr = {
+					width : bannerAttr.width / grid.column,
+					height : bannerAttr.height / grid.list
+				};
+
+
+			var index = 0,
+				imgs = ['images/1.jpg','images/2.jpg','images/3.jpg','images/4.jpg'];
+
+			//先给banner设置宽高
+			oBanner.style.width = bannerAttr.width+'px';
+			oBanner.style.height = bannerAttr.height+'px';
+
+			//创建行
+			for(var i = 0;i < grid.list;i++){
+
+				//创建列
+				for(var j = 0;j < grid.column;j++){
+
+					var thatI = document.createElement('i');
+
+					//设置i的宽高
+					thatI.style.width = oIAttr.width+'px';
+					thatI.style.height = oIAttr.height+'px';
+
+					//设置背景
+					thatI.style.backgroundPositionX = -j * oIAttr.width+'px';
+					thatI.style.backgroundPositionY = -i * oIAttr.height+'px';
+					thatI.style.backgroundImage = 'url('+imgs[index]+')';
+					thatI.style.backgroundSize = bannerAttr.width+'px '+bannerAttr.height+'px';
+
+					oFragment.appendChild(thatI);
+				}
+			}
+
+			oBtns[0].onclick = function(){
+
+				index--;
+				if(index < 0){
+
+					index = imgs.length -1;
+				}
+				move();
+			}
+
+			oBtns[1].onclick = function(){
+
+				index++;
+				index%=imgs.length;
+				move();
+			}
+			
+			//运动函数
+			/*function move(){
+
+				for(var i = 0,iL = oFragmentI.length;i < iL;i++){
+
+					animation(oFragmentI[i],{
+						left : parseInt(Math.random() * 2 * bannerAttr.width) - bannerAttr.width,//-1000~1000
+						top : parseInt(Math.random() * 2 * bannerAttr.height) - bannerAttr.height,
+						opacity : 0
+					},{
+						duration : 1000
+					},function(){
+
+						//在回调设置背景
+						this.style.backgroundImage = 'url('+imgs[index]+')';
+						animation(this,{
+							left : 0,
+							top : 0,
+							opacity : 1
+						},{
+							duration : parseInt(Math.random() * 1000) + 1000
+						})
+					})
+				}
+			}*/
+
+			/*function move(){
+
+				for(var i = 0,iL = oFragmentI.length;i < iL;i++){
+
+					animation(oFragmentI[i],{
+						left : parseInt(Math.random() * 2 * bannerAttr.width) - bannerAttr.width,//-1000~1000
+						top : parseInt(Math.random() * 2 * bannerAttr.height) - bannerAttr.height,
+						opacity : 0
+					},{
+						duration : 1000,
+						delay : parseInt(Math.random() * 1000) + 500
+					},function(){
+
+						//在回调设置背景
+						this.style.backgroundImage = 'url('+imgs[index]+')';
+						animation(this,{
+							left : 0,
+							top : 0,
+							opacity : 1
+						},{
+							duration : 1000,
+							delay : parseInt(Math.random() * 500) + 500
+						})
+					})
+				}
+			}*/
+
+
+			function move(){
+
+				for(var i = 0,iL = oFragmentI.length;i < iL;i++){
+
+					animation(oFragmentI[i],{
+						left : parseInt(Math.random() * 2 * bannerAttr.width) - bannerAttr.width,
+						top : parseInt(Math.random() * 2 * bannerAttr.height) - bannerAttr.height,
+						opacity : 0,
+						transform : {
+
+							//初始化函数
+							start : function(){
+
+								//可以任意属性
+								return {
+									rotateX : {
+										start : 0,
+										change : parseInt(Math.random() * 360) + 360
+									},
+									rotateY : {
+										start : 0,
+										change : parseInt(Math.random() * 360) + 360
+									},
+									rotate : {
+										start : 0,
+										change : parseInt(Math.random() * 360) + 360
+									}
+								};
+							},
+
+							//更新函数
+							up : function(start,now,duration,key,timingFn){
+
+								var transform = "";
+								for(var attr in start){
+
+									transform += attr+'('+timingFn(now,start[attr].start,start[attr].change,duration)+'deg) ';
+								}
+								this.style.transform = transform;
+							}
+						}
+					},{
+						duration : parseInt(Math.random() * 500) + 500
+					},function(){
+
+						//在回调设置背景
+						this.style.backgroundImage = 'url('+imgs[index]+')';
+						animation(this,{
+							left : 0,
+							top : 0,
+							opacity : 1,
+							transform : {
+								//初始化函数
+								start : function(){
+
+									var rotateX = parseInt(Math.random() * 360) + 360,
+									 	rotateY = parseInt(Math.random() * 360) + 360,
+										rotate = parseInt(Math.random() * 360) + 360;
+										
+									//可以任意属性
+									return {
+										rotateX : {
+											start : rotateX,
+											change : -rotateX
+										},
+										rotateY : {
+											start : rotateY,
+											change : -rotateY
+										},
+										rotate : {
+											start : rotate,
+											change : -rotate
+										}
+									};
+								},
+
+								//更新函数
+								up : function(start,now,duration,key,timingFn){
+
+									var transform = "";
+									for(var attr in start){
+
+										transform += attr+'('+timingFn(now,start[attr].start,start[attr].change,duration)+'deg) ';
+									}
+									this.style.transform = transform;
+								}
+							}
+						},{
+							duration : parseInt(Math.random() * 500) + 500
+						})
+					})
+				}
+			}
+
+		}
+	</script>
+</body>
+</html>
