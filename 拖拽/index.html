@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <style>
+        .box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script>
+    var oBox = document.querySelector('.box');
+    oBox.style.top =  '50px';
+    oBox.style.left = '50px';
+    var fn = function (e) {
+        document.addEventListener('mousemove', mFn, false);
+
+    }
+    //跟踪鼠标
+    var mFn = function (e) {
+        oBox.style.top = e.clientY-oBox.offsetHeight/2 + 'px';
+        oBox.style.left = e.clientX-oBox.offsetWidth/2 + 'px';
+        oBox.addEventListener('dblclick', dbFn, false);
+    }
+    //双击停止
+    var dbFn = function(){
+        document.removeEventListener('mousemove', mFn, false);
+    }
+    oBox.addEventListener('click', fn, false);
+</script>
+</body>
+</html>
