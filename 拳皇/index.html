@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拳皇</title>
+    <style>
+        .game {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            background-color: black;
+        }
+
+        #role {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="game">
+    <div id="role"><img src="images/前进.gif" alt=""></div>
+</div>
+<script>
+    var role = document.getElementById('role'),
+        oImg = document.querySelector('#role>img');
+    var i = 0;
+    document.addEventListener('keydown', function (e) {
+        if (e.keyCode == 39) {
+            i += 5;
+            role.style.left = i + 'px';
+            if (oImg.getAttribute("src") != "images/前进.gif") {
+                oImg.src = "images/前进.gif";
+            }
+        }
+        if (e.keyCode == 38) {
+            if (oImg.getAttribute("src") != "images/攻击.gif") {
+                oImg.src = "images/攻击.gif";
+            }
+        }
+        if (e.keyCode == 37) {
+            i -= 5;
+            role.style.left = i + 'px';
+            if (oImg.getAttribute("src") != "images/后退.gif") {
+                oImg.src = "images/后退.gif";
+            }
+        }
+        if (e.keyCode == 40) {
+            if (oImg.getAttribute("src") != "images/下蹲.gif") {
+
+                oImg.src = "images/下蹲.gif";
+            }
+        }
+    })
+    document.addEventListener('keyup', function (e) {
+        oImg.src = "images/前进.gif";
+
+    })
+</script>
+</body>
+</html>
