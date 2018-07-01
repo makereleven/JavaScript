@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style>
+        input {
+            padding: 0;
+            border: 0;
+            outline: none;
+            border-radius: 0;
+        }
+
+        #register {
+            width: 300px;
+            margin: 50px auto;
+        }
+        #register div{
+            position: relative;
+        }
+        #register span{
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: red;
+            font-size: 12px;
+        }
+        #register p {
+            color: #000;
+            font-size: 12px;
+        }
+
+        #register input {
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #000000;
+        }
+
+        #register button {
+            width: 100%;
+            height: 50px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<form action="#" id="register">
+    <p>请输入11位数字</p>
+    <div>
+        <input id="phone" type="text" placeholder="手机号">
+        <span>不合法</span>
+    </div>
+    <p>以英文开头，包含字母、数字，长度6-16位</p>
+    <div>
+        <input id="username" type="text" placeholder="昵称">
+        <span>不合法</span>
+    </div>
+    <p>以英文开头，包含字母、数字，长度6-16位</p>
+    <div>
+        <input id="password" type="password" placeholder="密码">
+        <span>不合法</span>
+    </div>
+    <p>再次输入密码</p>
+    <div>
+        <input id="passwordcnf" type="password" placeholder="再次输入密码">
+        <span>不合法</span>
+    </div>
+    <p>请输入正确邮箱</p>
+    <div>
+        <input id="email" type="text" placeholder="邮箱">
+        <span>不合法</span>
+    </div>
+
+    <button id="submit" onclick="formSubmit()">注册</button>
+</form>
+<script type="text/javascript">
+    var registerForm = document.getElementById('register'),
+        phone = document.getElementById('phone'),
+        username = document.getElementById('username'),
+        pwd = document.getElementById('password'),
+        pwdConfirm = document.getElementById('passwordcnf'),
+        email = document.getElementById('email'),
+        submit = document.getElementById('submit'),
+        illegal=document.querySelector(' #register span');
+    var flag = false;
+    registerForm.onchange = function (e) {
+        var e = e || window.event;
+        var target = e.target || e.srcElement;
+        var reg;
+        if (target.nodeName.toLowerCase() === 'input') {
+            switch (target.id) {
+                case 'phone':
+                    reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+                    if (!reg.test(target.value)) {
+                        target.style.borderBottomColor = '#f00';
+                        illegal.style.display="block";
+                        flag = false;
+                    } else {
+                        target.style.borderBottomColor = '';
+                        illegal.style.display="none";
+                        flag = true;
+                    }
+                    break;
+                case'username':
+                    reg = /^[a-zA-Z]\w{5,15}$/;
+                    if (!reg.test(target.value)) {
+                        target.style.borderBottomColor = '#f00';
+                        illegal.style.display="block";
+                        flag = false;
+                    } else {
+                        target.style.borderBottomColor = '';
+                        illegal.style.display="none";
+                        flag = true;
+                    }
+                    break;
+                case'password':
+                    reg = /^[a-zA-Z]\w{5,15}$/;
+                    if (!reg.test(target.value)) {
+                        target.style.borderBottomColor = '#f00';
+                        illegal.style.display="block";
+                        flag = false;
+                    } else {
+                        target.style.borderBottomColor = '';
+                        illegal.style.display="none";
+                        flag = true;
+                    }
+                    break;
+                case'passwordcnf':
+                    if (!(pwd.value === target.value)) {
+                        target.style.borderBottomColor = '#f00';
+                        illegal.style.display="block";
+                        flag = false;
+                    } else {
+                        target.style.borderBottomColor = '';
+                        illegal.style.display="none";
+                        flag = true;
+                    }
+                    break;
+                case'email':
+                    reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                    if (!reg.test(target.value)) {
+                        target.style.borderBottomColor = '#f00';
+                        illegal.style.display="block";
+                        flag = false;
+                    } else {
+                        target.style.borderBottomColor = '';
+                        illegal.style.display="none";
+                        flag = true;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+        }
+    }
+
+    function formSubmit() {
+        if (flag) {
+            registerForm.submit()
+        } else {
+            alert('注册信息不正确');
+        }
+    }
+
+</script>
+</body>
+</html>
