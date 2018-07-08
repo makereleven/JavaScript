@@ -22,6 +22,11 @@
     // });
     
     ajax({
+        type:'get',
+        data:{// 发送数据
+            user:'emmm',
+            age:18
+        },
         url:'/test.php',
         success:function (data) {
             consolo.log(data)
@@ -34,14 +39,14 @@
      */
     function ajax(options) {
         options.type=/post/i.test(options.type)?'POST':'GET';
-        options.async=option.async===false?false:true;
+        options.async=options.async===false?false:true;
         var xhr = new XMLHttpRequest();
 
         var data='';
         for(var k in options.data){
             data+=k+'='+encodeURIComponent(options.data[k])+'&';
         }
-        
+        //是get还是post
         if (options.type === 'GET') {
             if(/\?/.test(options.url)){
                 options.url+='?'+data;
@@ -52,9 +57,10 @@
                 //加上时间避免缓存
                 options.url+=data+'_='+new Date().getTime();
             }
-
+            console.log(options.url);
             xhr.open(options.type,options.url)
 
+            //监听状态发送改变
             xhr.onreadystatechange=function () {
                 if(this.readyState===4){
                     if(this.status>199&&this.status<300||this){

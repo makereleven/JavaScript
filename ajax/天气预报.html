@@ -2,9 +2,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>天气预报</title>
+    <style>
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        .box{
+            width:600px;
+            margin: auto;
+        }
+        #place{
+            display: block;
+            width: 50%;
+            margin: auto;
+        }
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .view > li {
+            position: relative;
+            float: left;
+            width: 200px;
+            height: 400px;
+        }
+
+        .view > li:hover {
+            background-color: #eee;
+        }
+
+        .view > li:after {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background-color: black;
+            content: '';
+        }
+
+        .view > li:nth-child(1):before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background-color: black;
+            content: '';
+        }
+        .view > li>p{
+            text-align: center;
+        }
+        .date {
+
+        }
+    </style>
 </head>
 <body>
+<div class="box">
+    <input type="text" name="place" id="place">
+    <ul class="view" id="view">
+    </ul>
+</div>
+<script type="text/javascript" src="ajax.js"></script>
+<script>
+    var place = document.getElementById('place'),
+        view = document.getElementById('view');
 
+    function formatterDateTime() {
+        var date = new Date()
+        var month = date.getMonth() + 1
+        var datetime = date.getFullYear()
+            + ""// "年"
+            + (month >= 10 ? month : "0" + month)
+            + ""// "月"
+            + (date.getDate() < 10 ? "0" + date.getDate() : date
+                .getDate())
+            + ""
+            + (date.getHours() < 10 ? "0" + date.getHours() : date
+                .getHours())
+            + ""
+            + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date
+                .getMinutes())
+            + ""
+            + (date.getSeconds() < 10 ? "0" + date.getSeconds() : date
+                .getSeconds());
+        return datetime;
+    }
+
+    function createLi(data) {
+        var arr = [data.f1, data.f2, data.f3];
+        for (var i = 0; i < 3; i++) {
+            var oLi = document.createElement('li');
+            var domArr = "<p>" + arr[i].day.substring(0,4)+'年'+arr[i].day.substring(4,6)+'月'+arr[i].day.substring(6,8)+'日' + "</p>" +
+                "<p>温度:" + arr[i].day_air_temperature + "</p>" +
+                "<p>白天天气:" + arr[i].day_weather + "</p>" +
+                "<p>晚上天气:" + arr[i].night_weather + "</p>";
+            oLi.innerHTML = domArr;
+            view.appendChild(oLi);
+        }
+        console.log(view)
+    }
+
+    place.onchange = function () {
+        ajax({
+            type: 'post',
+            url: 'http://route.showapi.com/9-2',
+            dataType: 'json',
+            data: {
+                "showapi_timestamp": formatterDateTime(),
+                "showapi_appid": '69151', //这里需要改成自己的appid
+                "showapi_sign": '13c6302cf57743e6b1289f08c1a79970',  //这里需要改成自己的应用的密钥secret
+                "areaid": "101291401",
+                "area": this.value,
+                "needMoreDay": "0",
+                "needIndex": "0",
+                "needHourData": "0",
+                "need3HourForcast": "0",
+                "needAlarm": "0"
+
+            },
+
+            error: function (XmlHttpRequest, textStatus, errorThrown) {
+                alert("操作失败!");
+            },
+            success: function (result) {
+                console.log(result) //console变量在ie低版本下不能用
+                createLi(result.showapi_res_body)
+            }
+        });
+    }
+</script>
 </body>
 </html>
