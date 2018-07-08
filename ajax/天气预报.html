@@ -15,8 +15,8 @@
         }
         #place{
             display: block;
-            width: 50%;
-            margin: auto;
+            width: 300px;
+            margin: 10px 150px;
         }
         .clearfix:after {
             content: '';
@@ -29,10 +29,12 @@
             float: left;
             width: 200px;
             height: 400px;
+            background-color: #55626f;
+            color: #fff;
         }
 
         .view > li:hover {
-            background-color: #eee;
+            opacity: 0.5;
         }
 
         .view > li:after {
@@ -41,7 +43,7 @@
             top: 0;
             height: 100%;
             width: 1px;
-            background-color: black;
+            background-color: #eee;
             content: '';
         }
 
@@ -51,7 +53,7 @@
             top: 0;
             height: 100%;
             width: 1px;
-            background-color: black;
+            background-color: #eee;
             content: '';
         }
         .view > li>p{
@@ -95,17 +97,23 @@
     }
 
     function createLi(data) {
-        var arr = [data.f1, data.f2, data.f3];
-        for (var i = 0; i < 3; i++) {
-            var oLi = document.createElement('li');
-            var domArr = "<p>" + arr[i].day.substring(0,4)+'年'+arr[i].day.substring(4,6)+'月'+arr[i].day.substring(6,8)+'日' + "</p>" +
-                "<p>温度:" + arr[i].day_air_temperature + "</p>" +
-                "<p>白天天气:" + arr[i].day_weather + "</p>" +
-                "<p>晚上天气:" + arr[i].night_weather + "</p>";
-            oLi.innerHTML = domArr;
-            view.appendChild(oLi);
+        view.innerHTML="";
+        if(data.ret_code===0){
+
+            var arr = [data.f1, data.f2, data.f3];
+            for (var i = 0; i < 3; i++) {
+                var oLi = document.createElement('li');
+                var domArr = "<p>" + arr[i].day.substring(0,4)+'年'+arr[i].day.substring(4,6)+'月'+arr[i].day.substring(6,8)+'日' + "</p>" +
+                    "<p>温度:" + arr[i].day_air_temperature + "</p>" +
+                    "<p>白天天气:" + arr[i].day_weather + "</p>" +
+                    "<p>晚上天气:" + arr[i].night_weather + "</p>"+
+                    "<p>" + arr[i].day_wind_direction + "</p>";
+                oLi.innerHTML = domArr;
+                view.appendChild(oLi);
+            }
+        }else {
+            alert("输入错误");
         }
-        console.log(view)
     }
 
     place.onchange = function () {
@@ -117,7 +125,6 @@
                 "showapi_timestamp": formatterDateTime(),
                 "showapi_appid": '69151', //这里需要改成自己的appid
                 "showapi_sign": '13c6302cf57743e6b1289f08c1a79970',  //这里需要改成自己的应用的密钥secret
-                "areaid": "101291401",
                 "area": this.value,
                 "needMoreDay": "0",
                 "needIndex": "0",
