@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <title>滚动</title>
     <style>
+        ul,li{
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
         .page{
             position: relative;
             overflow: hidden;
             width: 500px;
             height:800px;
         }
-        .page p{
+        .page ul{
+            position: absolute;
+        }
+        .page ul>li{
             border:1px solid;
         }
         .scroll{
@@ -35,22 +43,24 @@
 </head>
 <body>
 <div class="page">
-    <p>真理惟一可靠的标准就是永远自相符合</p>
-    <p>土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</p>
-    <p>我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</p>
-    <p>时间是一切财富中最宝贵的财富。</p>
-    <p>生活有度，人生添寿。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>过放荡不羁的生活，容易得像顺水推舟，但是要结识良朋益友，却难如登天。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
-    <p>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</p>
+    <ul>
+        <li>真理惟一可靠的标准就是永远自相符合</li>
+        <li>土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。</li>
+        <li>我需要三件东西：爱情友谊和图书。然而这三者之间何其相通！炽热的爱情可以充实图书的内容，图书又是人们最忠实的朋友。</li>
+        <li>时间是一切财富中最宝贵的财富。</li>
+        <li>生活有度，人生添寿。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>过放荡不羁的生活，容易得像顺水推舟，但是要结识良朋益友，却难如登天。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+        <li>这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。</li>
+    </ul>
     <div class="scroll">
         <i></i>
     </div>
@@ -58,7 +68,8 @@
 <script>
     var oPage=document.querySelector('.page'),
     oScroll=document.querySelector('.scroll'),
-    oScrolli=document.querySelector('.scroll>i');
+    oScrolli=document.querySelector('.scroll>i'),
+    oUl=document.querySelector('ul');
 
     oScrolli.onmousedown=function () {
         document.addEventListener('mousemove',fn,false);
@@ -66,11 +77,30 @@
     }
     var fn = function (e) {
         oScrolli.style.top=e.clientY-oScrolli.offsetHeight/2+'px';
+        oUl.style.top="-"+oScrolli.style.top;
     }
     var dRemove= function () {
         document.removeEventListener('mousemove',fn,false);
     }
-
+    function mousewheelEvent(ele,fn,boolean){
+        if(ele.addEventListener){
+            if(ele.onmousewheel===undefined){
+                ele.addEventListener('DOMMousewheel',fn,boolean);
+            }
+        }else{
+            ele.attachEvent('onmousewheel',function () {
+                fn.call(ele);
+            });
+        }
+    }
+    mousewheelEvent(oPage,function (e) {
+        e=e||window.event;
+        if(e.preventDefault){
+            e.preventDefault();
+        }else {
+            e.returnValue=false;
+        }
+    })
 </script>
 </body>
 </html>

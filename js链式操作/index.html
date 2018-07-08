@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js链式操作</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+
+        .list {
+            width: 200px;
+
+        }
+
+        .list li {
+            height: 30px;
+            background-color: green;
+        }
+
+        .list li + li {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<ul class="list">
+    <li>
+        <span></span>
+    </li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div class="box2">
+    <a>
+        <p style="width: 100px;">
+            <img src="">
+            <span></span>
+        </p>
+        <p style="width: 300px;"></p>
+    </a>
+</div>
+<script>
+    // query('.list li').eq(3).css({
+    //         height : 100,
+    //         background : '#121212'
+    //     });
+    query('.list li').eq(3).css({
+        height: 100,
+        background: '#121212'
+    }).on('click', function () {
+
+        query(this).css('background', 'pink').off('click');
+    });
+    // query('.list li').gt(1).css('height','200');
+    // query('.list li').gt(1).css('height','200');
+    // query('.list li').lt(1).css('height','200');
+     query('.list li').gt(1).lt(2).css('height','200');
+    function query(str) {
+        var ements = [];
+        ;(function () {
+            if (typeof str == 'string') {
+                if (document.querySelectorAll) {
+                    ements = document.querySelectorAll(str);
+
+                } else {
+                    var _head = document.getElementsByTagName('head')[0],
+                        _style = document.createElement('style');
+                    _head.appendChild(_style);//添加到head头部
+                    document.queryEment = [];
+                    _style.styleSheet.cssText = str + '{query:expression(document.queryEments.push(this))}';
+                    window.scrollBy(0, 0);//默认让窗口滚动一下
+                    _head.removeChild(_style);//只需要获取一次
+                    ements = document.queryEments.splice(0, document.queryEments.length);
+                    Each(function (_dom, key, arr) {
+                        _dom.style.removeAttribute('query');
+                    });
+                }
+            } else if (str instanceof Node) {//如果是一个节点
+
+                ements = [str];
+            } else if (typeof str == 'object' && typeof str.length == 'number') {
+
+                ements = str;
+            }
+        })();
+
+
+        //遍历的方法
+        function Each(fn, arr, that) {
+            //console.log(arr);
+            arr = arr || ements;//默认就是ements元素节点数组
+            //console.log(arr)
+            for (var i = 0, iL = arr.length; i < iL; i++) {
+
+                fn.call(that || fns, arr[i], i, arr);//函数执行
+            }
+        }
+
+        var fns = {
+            css: function (attr, key) {
+                if (typeof attr == 'string') {
+                    if (key) {
+
+                        var _css = {};
+                        _css[attr] = key;
+
+                        return this.css(_css);
+                        //return this.setStyle(_css);//这里可以使用递归调用
+                    } else {
+
+                        return this.getStyle(attr);
+                    }
+                } else if (typeof attr === 'object') {
+                    return this.setStyle(attr);
+                }
+            },
+            eq: function (n) {
+                return query(ements[n]);
+            },
+            gt: function (n) {
+                // for(var i=0;i<ements.length;i++){
+                //
+                // }
+                return query([].slice.call(ements).splice(n));
+            },
+            lt:function(n){
+                return query([].slice.call(ements).splice(0,n+1));
+            },
+            //设置样式
+            setStyle: function (attr) {
+                var emAttr = ['width', 'height', 'top', 'bottom', 'left', 'right'];
+                Each(function (dom) {
+                    for (var key in attr) {
+                        if (emAttr.toString().indexOf(key) != -1) {
+                            dom.style[key] = attr[key] + 'px';
+                        } else {
+                            dom.style[key] = attr[key];
+                        }
+                    }
+                });
+                return fns;
+            },
+            //获取样式
+            getStyle: function (key) {
+                if (ements[0]) {
+                    var dom = ements[0],
+                        attr = dom.currentStyle || getComputedStyle(dom);
+                    return (typeof key == 'string') ? attr[key] : attr;
+                }
+            },
+            //事件绑定
+            on: function (eventType, fn, bl) {
+                eventType = eventType.split(',');
+                Each(function (ele) {
+                    if (ele.addEventListener) {
+                        var handlerFn = fn;
+                    } else {
+                        var handlerFn = function () {
+                            fn.call(ele);
+                        }
+                    }
+                    for (var ev = 0, evL = eventType.length; ev < evL; ev++) {
+                        if (ele.addEventListener) {
+                            ele.addEventListener(eventType[ev], handlerFn, bl);
+                        } else {
+                            ele.attachEvent('on' + eventType[ev], handlerFn);
+                        }
+                        var eventLis = (ele.event || (ele._event = {}))[eventType[ev]] || (ele._event[eventType[ev]] = []);
+                        eventList.push(handlerFn);
+                    }
+                });
+                return fns;
+            },
+            //事件注销
+            off: function (eventType, fn, bl) {
+                eventType = eventType.split('');
+                Each(function (ele) {
+                    for (var ev = 0, evL = eventType.length; ev < evL; ev++) {
+                        if (!ele._event || !ele._event[eventType[ev]]) {
+                            continue;
+                        }
+                        var _key = null,
+                            eventList = ele._event[eventType[ev]];
+                        if (typeof fn == 'function') {
+                            for (var f = 0, fL = eventList.length; f < fL; f++) {
+                                if (fn == eventList[f]) {
+                                    _key = f;
+                                    break;
+                                }
+                            }
+                        } else {
+                            _key = eventList.length - 1;
+                        }
+                        if (_key === null) {
+                            return;
+                        }
+                        if (ele.removeEventListener) {
+                            ele.removeEventListener(eventType[ev], eventList.splice(_key,)[0], bl);
+                        } else {
+                            ele.detachEvent('on' + eventType[ev], eventList.splice(_key, 1)[0]);
+                        }
+                    }
+                });
+                return fns;
+            }
+        };
+        return fns;
+    }
+</script>
+</body>
+</html>

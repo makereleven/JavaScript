@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拼图游戏</title>
+    <style>
+        .clearfix:after{
+            display: block;
+            clear: both;
+            content: '';
+        }
+        .img,.fragment {
+            width: 960px;
+            height: 540px;
+        }
+        .fragment i{
+            float: left;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div class="img"></div>
+<div class="fragment clearfix"></div>
+<script>
+    var oImg = document.querySelector('.img'),
+        oFragment = document.querySelector('.fragment'),
+        aItem = oFragment.getElementsByTagName('i');
+
+
+    oImg.style.background = "url(images/bg.jpg) no-repeat 0 0/100% 100%";
+
+    addFragment(4,4);
+    //创建碎片，打乱顺序
+    function addFragment(row,column) {
+        var iAttr={
+            width:oImg.offsetWidth/row,
+            height:oImg.offsetHeight/column
+        }
+        for(var i = 0;i<row;i++){
+            for(var j = 0;j<column;j++){
+                var oi = document.createElement('i');
+                oi.style.width = iAttr.width+'px';
+                oi.style.height = iAttr.height+'px';
+                oi.style.backgroundImage = "url(images/bg.jpg)";
+                oi.style.backgroundPositionX=-j * iAttr.width+'px';
+                oi.style.backgroundPositionY=-i * iAttr.height+'px';
+                oi.style.backgroundSize= "960px 540px";
+                oi.style.border= "1px solid";
+                oFragment.appendChild(oi);
+            }
+        }
+
+        aItem[parseInt(Math.random()*aItem.length)].style.background="#fff";
+        //打乱顺序
+        for(var k = 0;k<aItem.length;k++){
+            var ran=parseInt(Math.random()*aItem.length);
+            aItem[ran+1]&&oFragment.insertBefore(aItem[ran+1],aItem[ran]);
+            if(aItem[ran+1]&&ran%row!=(row-1)){
+                oFragment.insertBefore(aItem[ran+1],aItem[ran]);
+            }
+        }
+        for(var i = 0;i<aItem.length;i++){
+            aItem[i].index=i;
+            aItem[i].success=i;
+            aItem[i].onclick=function () {
+                var index =this.index;
+
+                if(this.index%row!=(row-1)&&aItem[index+1]&&aItem[index+1].style.background=="rgb(255, 255, 255)"){
+                    replaceNode(aItem[index+1],this);
+                }
+
+                if(aItem[index+row]&&aItem[index+row].style.background=="rgb(255, 255, 255)"){
+                    replaceNode(aItem[index+row],this);
+                }
+
+                if(aItem[index-row]&&aItem[index-row].style.background=="rgb(255, 255, 255)"){
+                    replaceNode(aItem[index-row],this);
+                }
+
+                if(this.index%row!=0&&aItem[index-1]&&aItem[index-1].style.background=="rgb(255, 255, 255)"){
+                    replaceNode(aItem[index-1],this);
+                }
+            }
+        }
+    }
+    //交换节点、index和点击事件
+    function replaceNode(Node00 , Node01)
+    {
+        var aParent = Node00.parentNode;
+        var bParent = Node01.parentNode;
+        var index;
+        if(aParent && bParent)
+        {
+            var cloneNewNode00 = Node00.cloneNode(true);
+            //克隆的节点 要带上原节点onclick属性 和index属性也带上
+            cloneNewNode00.onclick = Node00.onclick;
+            cloneNewNode00.index = Node00.index;
+            index=cloneNewNode00.index;
+            cloneNewNode00.index=Node01.index;
+            Node01.index=index;
+            bParent.replaceChild(cloneNewNode00,Node01);
+            aParent.replaceChild(Node01,Node00);
+        }
+    }
+    var success=setTimeout(function () {
+        for(var i=0;i<aItem.length;i++){
+            console.log(aItem[i].success!=i)
+            console.log(aItem[i].success)
+            if(aItem[i].success!=i){
+                alert("你失败了");
+                break;
+            }else {
+                clearTimeout(success);
+            }
+        }
+    },100000)
+</script>
+</body>
+</html>

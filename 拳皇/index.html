@@ -13,6 +13,7 @@
 
         #role {
             position: absolute;
+            bottom:50px;
         }
     </style>
 </head>
@@ -24,6 +25,54 @@
     var role = document.getElementById('role'),
         oImg = document.querySelector('#role>img');
     var i = 0;
+    var keyCodeState=[];
+    var boxAttr={
+        x:0,
+        y:0,
+        vx:0,
+        vy:0
+    }
+    document.addEventListener('keydown',function (e) {
+        console.log(e.keyCode)
+        if(keyCodeState[e.keyCode]===true){
+            return false;
+        }
+        switch(e.keyCode){
+            case 38://上
+                break;
+            case 40://下
+                break;
+            case 37://左
+                boxAttr.vx=-3;
+                break;
+            case 39://右
+                boxAttr.vx=3;
+                break;
+        }
+        keyCodeState[e.keyCode]=true;
+    });
+    document.addEventListener('keyup',function (e) {
+        keyCodeState[e.keyCode]=false;
+        switch(e.keyCode){
+            case 38://上
+                break;
+            case 40://下
+                break;
+            case 37://左
+                boxAttr.vx=-3;
+                break;
+            case 39://右
+                boxAttr.vx=3;
+                break;
+        }
+    })
+    function fn(){
+        boxAttr.x+=boxAttr.vx;
+        boxAttr.y+=boxAttr.vy;
+        oBox.style.left=boxAttr.x+'px';
+        oBox.style.top=boxAttr.y+'px';
+        requestAnimationFrame(fn);
+    }
     document.addEventListener('keydown', function (e) {
         if (e.keyCode == 39) {
             i += 5;
@@ -32,7 +81,7 @@
                 oImg.src = "images/前进.gif";
             }
         }
-        if (e.keyCode == 38) {
+        if (e.keyCode == 65) {
             if (oImg.getAttribute("src") != "images/攻击.gif") {
                 oImg.src = "images/攻击.gif";
             }

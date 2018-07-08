@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax</title>
+</head>
+<body>
+<script>
+    // ajax({
+    //     type:'post',
+    //     data:{// 发送数据
+    //         user:'emmm',
+    //         age:18
+    //     },
+    //     url:'/test.php',
+    //     success:function (data) {
+    //         console.log('success')
+    //     },
+    //     error:function (textStatus) {
+    //         console.log('error')
+    //     }
+    // });
+    
+    ajax({
+        url:'/test.php',
+        success:function (data) {
+            consolo.log(data)
+        }
+    });
+
+    /**
+     * ajax方法
+     * @param options
+     */
+    function ajax(options) {
+        options.type=/post/i.test(options.type)?'POST':'GET';
+        options.async=option.async===false?false:true;
+        var xhr = new XMLHttpRequest();
+
+        var data='';
+        for(var k in options.data){
+            data+=k+'='+encodeURIComponent(options.data[k])+'&';
+        }
+        
+        if (options.type === 'GET') {
+            if(/\?/.test(options.url)){
+                options.url+='?'+data;
+            }else{
+                if(!/&\s*$/.test(options.url)){
+                    options.url+='&';
+                }
+                //加上时间避免缓存
+                options.url+=data+'_='+new Date().getTime();
+            }
+
+            xhr.open(options.type,options.url)
+
+            xhr.onreadystatechange=function () {
+                if(this.readyState===4){
+                    if(this.status>199&&this.status<300||this){
+                        //成功函数
+                        options.success&&options.success.call(this,this.response);
+                    }else{
+                        //失败函数
+                        options.error&&options.error.call(this,this.status);
+                    }
+                }
+            };
+            xhr.send();// 发送
+        }
+    }
+</script>
+</body>
+</html>
