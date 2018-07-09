@@ -99,7 +99,13 @@
     function createLi(data) {
         view.innerHTML="";
         if(data.ret_code===0){
-
+            // var arr=[];
+            // for(var key in data){
+            //     var dayNum=key.match(/f(\d*)/);
+            //     if(dayNum){
+            //         arr[dayNum[1]-1]=data[key]
+            //     }
+            // }
             var arr = [data.f1, data.f2, data.f3];
             for (var i = 0; i < 3; i++) {
                 var oLi = document.createElement('li');
